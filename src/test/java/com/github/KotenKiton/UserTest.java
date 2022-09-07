@@ -12,4 +12,15 @@ public class UserTest {
                 .then()
                 .log().body();
     }
+
+    @Test
+    void ListOfUsers(){
+        Specs.request
+                .when()
+                .get("/users?page=2")
+                .then()
+                .log()
+                .body();
+    }
+
 }
