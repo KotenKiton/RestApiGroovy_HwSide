@@ -12,7 +12,7 @@ public class UserTest {
                 .then()
                 .log().body();
     }
-
+    // Все использованные спеки помогают манипулировать метаданными в тесте
     @Test
     void ListOfUsers(){
         Specs.request
