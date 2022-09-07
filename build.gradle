@@ -13,12 +13,12 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 def allureVersion = '2.19.0',
-    selenideVersion = '6.7.3',
+    selenideVersion = '6.7.4',
     junitVersion = '5.9.0',
-    slf4jVersion = '1.7.36',
+    slf4jVersion = '2.0.0',
     ownerVersion = "1.0.12",
     restAssured = '5.1.1',
-    jacksonVersion = "2.11.2"
+    jacksonVersion = '2.13.4'
 
 allure {
     report {
