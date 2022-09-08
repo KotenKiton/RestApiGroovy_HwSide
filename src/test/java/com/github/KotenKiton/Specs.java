@@ -18,6 +18,7 @@ public class Specs {
             .log().all()
             .contentType(ContentType.JSON);
 
+    //Хотим всегда проверять,что код 200 и приходило сообщение "success"
     public static ResponseSpecification responseSpec = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .expectBody(containsString("success"))
