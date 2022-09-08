@@ -1,9 +1,11 @@
 package com.github.KotenKiton;
 
+import com.github.KotenKiton.models.UserData;
 import org.junit.jupiter.api.Test;
 
-public class UserTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+public class UserTest {
     @Test
     void singleUser(){
         Specs.request
@@ -22,6 +24,18 @@ public class UserTest {
                 .then()
                 .log()
                 .body();
+    }
+    @Test
+    void singleUserWithModel(){
+        UserData data = Specs.request
+                .when()
+                .get("/users/2")
+                .then()
+                .spec(Specs.responseSpec)
+                .log().body()
+                .extract().as(UserData.class);
+
+        assertEquals(3, data.getData().getId());
     }
 
 }
