@@ -7,7 +7,6 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 import static io.restassured.RestAssured.with;
-import static org.hamcrest.Matchers.containsString;
 
 
 // Обычная = простая спека.
