@@ -1,5 +1,6 @@
 package com.github.KotenKiton;
 
+import com.github.KotenKiton.lombok.User;
 import com.github.KotenKiton.models.UserData;
 import org.junit.jupiter.api.Test;
 
@@ -38,4 +39,16 @@ public class UserTest {
         assertEquals(2, data.getData().getId());
     }
 
+    @Test
+    void singleUserWithLombokModel(){
+        com.github.KotenKiton.lombok.UserData data = Specs.request
+                .when()
+                .get("/users/2")
+                .then()
+                .spec(Specs.responseSpec)
+                .log().body()
+                .extract().as(com.github.KotenKiton.lombok.UserData.class);
+
+        assertEquals(2, data.getUser().getId());
+    }
 }
