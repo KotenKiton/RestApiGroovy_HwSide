@@ -8,9 +8,9 @@ import static io.restassured.http.ContentType.JSON;
 
 public class Specs {
     public static RequestSpecification request = with()
-            .baseUri("https://reqres.in/api")
-            .log().uri()
-            .log().body()
+            .baseUri("https://reqres.in")
+            .basePath("/api")
+            .log().all()
             .contentType(JSON);
 
     public static ResponseSpecification response = new ResponseSpecBuilder()
