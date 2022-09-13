@@ -1,9 +1,9 @@
 package homework;
 
 import homework.lombokModels.RequestLogin;
-import homework.lombokModels.RequestMorpheusJobIdCreatedAt;
+import homework.lombokModels.ResponseMorpheusJobIdCreatedAt;
 import homework.lombokModels.ResponseLogin;
-import homework.lombokModels.ResponseMorpheus;
+import homework.lombokModels.RequestMorpheus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 
 import static org.hamcrest.Matchers.is;
-import static specs.Specs.request;
-import static specs.Specs.response;
+import static specs.Specs.*;
 
 public class Tests {
 
@@ -42,39 +41,26 @@ public class Tests {
     @DisplayName("201test")
     void postStatusCode201() {
 
-        String exceptName = "morpheus";
-        String expectJob = "leader";
+        RequestMorpheus requestMorpheus = new RequestMorpheus(); // Инициализируем - создаем обьект класса.
+        requestMorpheus.setJob("leader"); // установили значение Body,которое мы отправляем.
+        requestMorpheus.setName("morpheus");
 
-        RequestMorpheusJobIdCreatedAt body = new RequestMorpheusJobIdCreatedAt();
-        body.setName("morpheus");
-        body.setJob("leader");
-        body.setId(484);
-        body.setCreatedAt("2022-09-13T09:16:11.144Z");
-
-        ResponseMorpheus responseMorpheus = given()
-                .spec(request).body(body)
+        ResponseMorpheusJobIdCreatedAt responseMorpheus = given()
+                .spec(request).body(requestMorpheus)
                 .when()
-                .post("/register")
-                .then().spec(response)
-                .extract().as(ResponseMorpheus.class);
+                .post("/users")
+                .then().spec(response201)
+                .extract().as(ResponseMorpheusJobIdCreatedAt.class);
 
-        Assertions.assertEquals(exceptName, responseMorpheus.getName());
-        Assertions.assertEquals(expectJob, responseMorpheus.getJob());
+        Assertions.assertEquals(requestMorpheus.getJob(), responseMorpheus.getJob());
+        Assertions.assertEquals(responseMorpheus.getName(), responseMorpheus.getName());
+        Assertions.assertNotNull(responseMorpheus.getId());
     }
 
-//    @Test
-//    @DisplayName("201test")
-//    void postStatusCode201() {
-//        String body = "{ \"name\": \"morpheus\", \"job\": \"leader\" }";
-//
-//        given()
-//                .body(body)
-//                .contentType(JSON)
-//                .when()
-//                .post("https://reqres.in/api/users")
-//                .then()
-//                .log().all()
-//                .statusCode(201)
-//                .body("name", is("morpheus"))
-//                .body("job", is("leader"));
+
+
+
+
+
 }
+
