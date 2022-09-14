@@ -3,6 +3,6 @@ package homework.lombokModels;
 import lombok.Data;
 
 @Data
-public class RequestError{
+public class ResponseError{
     private String error;
 }
