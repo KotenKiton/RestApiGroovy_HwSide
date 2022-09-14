@@ -9,6 +9,8 @@ import java.time.LocalDate;
 
 import static io.restassured.RestAssured.given;
 
+import static io.restassured.http.ContentType.JSON;
+import static org.hamcrest.Matchers.is;
 import static specs.Specs.*;
 
 public class ApiWithLombokTests {
@@ -58,7 +60,6 @@ public class ApiWithLombokTests {
     @Test
     @DisplayName("NullValue200")
     void putUpdatedAtNotNull() {
-        String body = "{ \"name\": \"morpheus\", \"job\": \"zion resident\" }";
 
         RequestMorpheus requestMorpheus = new RequestMorpheus();
         requestMorpheus.setName("morpheus");
@@ -66,7 +67,7 @@ public class ApiWithLombokTests {
 
         ResponseNameJobUpdatedAt resp = given()
                 .spec(request)
-                .body(body)
+                .body(requestMorpheus)
                 .when()
                 .put("/users/2")
                 .then().spec(response)
@@ -79,7 +80,39 @@ public class ApiWithLombokTests {
         Assertions.assertTrue(resp.getUpdatedAt().contains(date.toString()));
     }
 
+    @Test
+    @DisplayName("MissingPassword400")
+    void postMissingPassword() {
+        String body = "{ \"email\": \"sydney@fife\" }";
+
+        given()
+                .body(body)
+                .contentType(JSON)
+                .when()
+                .log().all() // Раскроет всё тело запроса
+                .post("https://reqres.in/api/register")
+                .then()
+                .log().all() // Раскроет всё тело ответа
+                .statusCode(400)
+                .body("error", is("Missing password"));
+    }
 
 }
 
+//    @Test
+//    @DisplayName("MissingPassword400")
+//    void postMissingPassword() {
+//        String body = "{ \"email\": \"sydney@fife\" }";
+//
+//        given()
+//                .body(body)
+//                .contentType(JSON)
+//                .when()
+//                .log().all() // Раскроет всё тело запроса
+//                .post("https://reqres.in/api/register")
+//                .then()
+//                .log().all() // Раскроет всё тело ответа
+//                .statusCode(400)
+//                .body("error", is("Missing password"));
+//    }
 
