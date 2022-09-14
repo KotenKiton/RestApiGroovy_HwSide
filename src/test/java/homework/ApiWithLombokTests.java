@@ -91,26 +91,8 @@ public class ApiWithLombokTests {
                 .body(requestLogin)
                 .when()
                 .post("/register")
-                .then().spec(MissingPassword400)
+                .then().spec(missingPassword400)
                 .body("error", is("Missing password"));
     }
-
 }
-
-//    @Test
-//    @DisplayName("MissingPassword400")
-//    void postMissingPassword() {
-//        String body = "{ \"email\": \"sydney@fife\" }";
-//
-//        given()
-//                .body(body)
-//                .contentType(JSON)
-//                .when()
-//                .log().all() // Раскроет всё тело запроса
-//                .post("https://reqres.in/api/register")
-//                .then()
-//                .log().all() // Раскроет всё тело ответа
-//                .statusCode(400)
-//                .body("error", is("Missing password"));
-//    }
 
