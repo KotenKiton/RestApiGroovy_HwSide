@@ -24,5 +24,4 @@ public class Specs {
             .expectStatusCode(201)
             .log(LogDetail.ALL)
             .build();
-
 }

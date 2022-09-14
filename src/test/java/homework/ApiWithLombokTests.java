@@ -1,19 +1,17 @@
 package homework;
 
-import homework.lombokModels.RequestLogin;
-import homework.lombokModels.ResponseMorpheusJobIdCreatedAt;
-import homework.lombokModels.ResponseLogin;
-import homework.lombokModels.RequestMorpheus;
+import homework.lombokModels.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static io.restassured.RestAssured.given;
 
-import static org.hamcrest.Matchers.is;
 import static specs.Specs.*;
 
-public class Tests {
+public class ApiWithLombokTests {
 
     @Test
     @DisplayName("200test")
@@ -57,10 +55,31 @@ public class Tests {
         Assertions.assertNotNull(responseMorpheus.getId());
     }
 
+    @Test
+    @DisplayName("NullValue200")
+    void putUpdatedAtNotNull() {
+        String body = "{ \"name\": \"morpheus\", \"job\": \"zion resident\" }";
 
+        RequestMorpheus requestMorpheus = new RequestMorpheus();
+        requestMorpheus.setName("morpheus");
+        requestMorpheus.setJob("zion resident");
 
+        ResponseNameJobUpdatedAt resp = given()
+                .spec(request)
+                .body(body)
+                .when()
+                .put("/users/2")
+                .then().spec(response)
+                .extract().as(ResponseNameJobUpdatedAt.class);// Всё содержимое поместим в этот класс.
 
+        Assertions.assertEquals(requestMorpheus.getName(), resp.getName());
+        Assertions.assertEquals(requestMorpheus.getJob(), resp.getJob());
+        LocalDate date = LocalDate.now();
+        System.out.println(date);
+        Assertions.assertTrue(resp.getUpdatedAt().contains(date.toString()));
+    }
 
 
 }
+
 
